@@ -1,0 +1,67 @@
+{% extends "shop/base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<!-- Carousel -->
+<div id="promoCarousel" class="carousel slide mb-4" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://placehold.co/1200x300/3498db/ffffff?text=Big+Sale+Up+to+50%25+Off" class="d-block w-100" alt="Promo 1">
+    </div>
+    <div class="carousel-item">
+      <img src="https://placehold.co/1200x300/e74c3c/ffffff?text=New+Arrivals" class="d-block w-100" alt="Promo 2">
+    </div>
+    <div class="carousel-item">
+      <img src="https://placehold.co/1200x300/2ecc71/ffffff?text=Free+Delivery+on+Orders+Over+1000+Tk" class="d-block w-100" alt="Promo 3">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#promoCarousel" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#promoCarousel" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<h1 class="mb-4" style="font-size: xx-large; font-weight: 1200px; ">Featured Products</h1>
+<div class="row row-cols-1 row-cols-md-4 g-4">
+  {% for p in products %}
+    <div class="col">
+      <div class="card h-100 shadow-sm rounded">
+        {% if p.image %}
+          <img src="{{ p.image.url }}" alt="{{ p.name }}" class="card-img-top" style="height: 220px; object-fit: contain;">
+        {% else %}
+          <img src="https://via.placeholder.com/300x220?text=No+Image" alt="No image" class="card-img-top" style="height: 220px; object-fit: contain;">
+        {% endif %}
+        <div style="background-color: {% if p.is_new %}#27ae60{% else %} #3498db {% endif %}; color: white; font-weight: 600; font-size: 1.3rem; text-align: center; padding: 0.75rem; border-top-left-radius: 0.5rem; border-top-right-radius: 0.5rem;">
+          {{ p.name|truncatechars:35 }}
+          {% if p.is_new %}
+            <span class="badge bg-success ms-2" style="font-size: 0.75rem; vertical-align: middle;">New</span>
+          {% endif %}
+        </div>
+        <div class="card-body d-flex flex-column">
+          <p class="card-text mb-2" style="font-size: 0.95rem; line-height: 1.3;">
+            {{ p.short_description|default:"No description available."|truncatechars:60 }}
+          </p>
+          <div class="mb-3" style="font-weight: 700; color: #007bff; font-size: 1.1rem;">
+            ৳{{ p.new_price }}
+            {% if p.old_price %}
+              <span class="text-muted text-decoration-line-through ms-3" style="font-weight: 400; font-size: 0.95rem;">৳{{ p.old_price }}</span>
+            {% endif %}
+          </div>
+          <a href="{% url 'shop:product_detail' p.slug %}" class="btn btn-outline-secondary btn-md mb-2 w-100">View Details</a>
+          <form method="post" action="{% url 'shop:add_to_cart' p.id %}" class="w-100">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-primary btn-md w-100">
+              <i class="bi bi-cart"></i> Add to Cart
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+  {% empty %}
+    <p>No products available.</p>
+  {% endfor %}
+</div>
+{% endblock %}

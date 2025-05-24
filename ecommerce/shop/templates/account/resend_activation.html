@@ -1,0 +1,13 @@
+{% extends "shop/base.html" %}
+{% block title %}Resend Activation Email{% endblock %}
+{% block content %}
+  <h3>Resend Activation Email</h3>
+  <form method="post">
+    {% csrf_token %}
+    <div class="mb-3">
+      <label for="email" class="form-label">Enter your email address</label>
+      <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Resend Email</button>
+  </form>
+{% endblock %}

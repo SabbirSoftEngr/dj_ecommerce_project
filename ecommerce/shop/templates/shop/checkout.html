@@ -1,0 +1,41 @@
+{% extends "shop/base.html" %}
+{% block title %}Checkout{% endblock %}
+
+{% block content %}
+<div class="container my-4">
+  <h2>Checkout</h2>
+
+  <form method="POST" action="{% url 'shop:checkout' %}">
+    {% csrf_token %}
+
+    <div class="mb-3">
+      <label for="payment_method" class="form-label">Select Payment Method:</label>
+      <select name="payment_method" id="payment_method" class="form-select" required>
+        <option value="">-- Choose Method --</option>
+        <option value="bkash">bKash</option>
+        <option value="visa">Visa</option>
+        <option value="mastercard">Mastercard</option>
+        <option value="sslcommerz">SSLCommerz</option>
+      </select>
+    </div>
+
+    <div class="mb-3" id="bkash_number_div" style="display:none;">
+      <label for="bkash_number" class="form-label">bKash Number:</label>
+      <input type="text" id="bkash_number" name="bkash_number" class="form-control" placeholder="Enter your bKash number">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Proceed to Payment</button>
+  </form>
+</div>
+
+<script>
+  document.getElementById('payment_method').addEventListener('change', function() {
+    const bkashDiv = document.getElementById('bkash_number_div');
+    if(this.value === 'bkash'){
+      bkashDiv.style.display = 'block';
+    } else {
+      bkashDiv.style.display = 'none';
+    }
+  });
+</script>
+{% endblock %}

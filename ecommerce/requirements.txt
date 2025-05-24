@@ -1,0 +1,4 @@
+Django==5.0.*          # latest LTS/major at the moment
+django-environ~=0.11
+django-crispy-forms~=2.1
+pillow~=10.0           # image uploads

@@ -1,0 +1,16 @@
+{% load socialaccount %}
+{% extends "shop/base.html" %}
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<h1>Sign Up</h1>
+<form method="post" novalidate>
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit" class="btn btn-primary">Sign Up</button>
+</form>
+<p>Already have an account? <a href="{% url 'account_login' %}">Sign in.</a></p>
+<hr>
+<h3>Or sign up with</h3>
+<a href="{% provider_login_url 'google' %}" class="btn btn-danger">Sign up with Google</a>
+{% endblock %}

@@ -1,0 +1,9 @@
+{% extends "shop/base.html" %}
+{% block title %}Activation Invalid{% endblock %}
+{% block content %}
+  <h3>Invalid Activation Link</h3>
+  <p>The activation link is invalid or has expired.</p>
+  <p>
+    You can <a href="{% url 'shop:register' %}">register again</a> or contact support if you think this is an error.
+  </p>
+{% endblock %}
